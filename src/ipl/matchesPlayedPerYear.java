@@ -1,6 +1,5 @@
 package ipl;
 import java.io.*;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,13 +11,13 @@ public class matchesPlayedPerYear {
 	String path2="deliveries.csv";
 	String line="";
 	String split=",";
-	String year="2016";
+	
 	
 //	String keys[]= {"id","season","city","date","team1","team2","toss_winner","toss_decision","result","dl_applied","winner","win_by_runs","win_by_wickets","player_of_match","venue","umpire1","umpire2","umpire3"};
 	ArrayList<String[]> match = new ArrayList<String[]>();
 	HashMap<String, Integer> matchData1 = new HashMap<String,Integer>();
 	HashMap<String, HashMap<String, Integer>> matchData2 = new HashMap<String, HashMap<String, Integer>>();
-	HashMap<String, Integer> winner = new HashMap<String,Integer>();
+	
 	ArrayList<String[]> deliveties=new ArrayList<String[]>();
 	HashMap<String, Integer> deliveryData = new HashMap<String,Integer>();
 //	String[] Ids16={};
@@ -44,8 +43,10 @@ public class matchesPlayedPerYear {
 			 
 //			 matchesPlayedPerYear
 			 if(matchData1.containsKey(data[1])==true) {
-				 count1+=1;
-				 matchData1.put(data[1], count1);
+//				 count1+=1;
+				 int cnt=matchData1.get(data[1]);
+				 cnt+=1;
+				 matchData1.put(data[1], cnt);
 			 }
 			 else {
 				 
@@ -73,8 +74,8 @@ public class matchesPlayedPerYear {
 			 }
 			 else {
 				 count2=1;
-				 winner.clear();
-//				 winner.put(data[10],count2);
+				 HashMap<String, Integer> winner = new HashMap<String,Integer>();
+				 winner.put(data[10],count2);
 				 matchData2.put(data[1],winner );
 			 }
 //		filtering data for 2016 
@@ -84,7 +85,7 @@ public class matchesPlayedPerYear {
 		 }
 //		 end of while loop
 		}
-// Extra runs conceded per team in the year 2016
+
 //		deliveries data read
 		 int skip1=0;
 		 BufferedReader br=new BufferedReader(new FileReader(path2));
@@ -110,15 +111,16 @@ public class matchesPlayedPerYear {
 	}
 	matchData1.forEach((k,v) -> System.out.println("Key = "
            + k + ", Value = " + v));
-//	matchData2.forEach((k,v) -> System.out.println("Key = "
-//           + k + ", Value = " + v));
+	matchData2.forEach((k,v) -> System.out.println("Key = "
+           + k + ", Value = " + v));
 //    
 
 //	Extra runs conceded per team in the year 2016
 for(int i=0;i<deliveties.size();i++) {
-	String key=deliveties.get(i)[0];
+	String year=deliveties.get(i)[0];
 	
-	if(Ids16.contains(key)) {
+	
+	if(Ids16.contains(year)) {
 		
 		String bowlingTeam=deliveties.get(i)[3];
 		String runs=deliveties.get(i)[16];
