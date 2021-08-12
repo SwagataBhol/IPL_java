@@ -1,7 +1,7 @@
 package com.ipl;
 
 import java.io.*;
-
+import java.util.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -32,21 +32,26 @@ public class Main {
 	
 // deliveries index
 	static int matchId=0;
-	static int innings=1;
-	static int  battingTeam=2;
+	static int inning=1;
+	static int battingTeam=2;
 	static int bowlingTeam=3;
 	static int over=4;
 	static int ball=5;
-	static int batsmanName=6;
-	static int bowlerName=7;
-	static int wideRuns=8;
-	static int byeRuns=9;
-	static int legByeRuns=10;
-	static int noballRuns=11;
-	static int penaltyRuns=12;
-	static int batsmanRuns=13;
-	static int totalRuns=15;
+	static int batsman=6;
+	static int nonStriker=7;
+	static int bowler=8;
+	static int isSuperOver=9;
+	static int wideRuns=10;
+	static int byeRuns=11;
+	static int legbyeRuns=12;
+	static int noballRuns=13;
+	static int penaltyRuns=14;
+	static int batsmanRuns=15;
 	static int extraRuns=16;
+	static int totalRuns=17;
+	static int playerDismissed=18;
+	static int dismissalKind=19;
+	static int fielder=20;
 	
 	
 //	read matches data 
@@ -105,6 +110,9 @@ int ignore=0;
 			  delivery.setBowlingTeam(data[bowlingTeam]);
 			  delivery.setMatchId(data[matchId]);
 			  delivery.setExtraRuns(data[extraRuns]);
+			  delivery.setBowler(data[bowler]);
+			  delivery.setBall(data[ball]);
+			  delivery.setTotalRuns(data[totalRuns]);
 			  
 			  deliveries.add(delivery);
 //			  System.out.println(deliveries.size());
@@ -118,6 +126,7 @@ int ignore=0;
 	return deliveries;
 }
 
+// 1st problem
 static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
 	int count=0;
 	HashMap<String, Integer> season = new HashMap<String,Integer>();
@@ -140,6 +149,8 @@ static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
 	
 	
 }
+
+// 2nd problem
 static HashMap<String,HashMap<String,Integer>> MatchesWonPerTeamPerYear(List<Match> matchData){
 	
 	HashMap<String, HashMap<String, Integer>> matchesWon = new HashMap<String, HashMap<String, Integer>>();
@@ -171,6 +182,8 @@ static HashMap<String,HashMap<String,Integer>> MatchesWonPerTeamPerYear(List<Mat
 	}
 	return matchesWon;
 }
+
+// 3rd problem
 static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyData,List<Match> matchData){
 	
 	HashMap<String,Integer> extraRunsPerTeam=new HashMap<String,Integer>();
@@ -207,19 +220,99 @@ static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyDa
 			else {
 				
 				extraRunsPerTeam.put(bowlingTeam,extraRunsValue );
-			}
-			
-			
-		}
-		
+			}	
+		}	
 	}
-	
-	
 	
 	return extraRunsPerTeam;
 }
 
+//4th problem
+static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
 	
+	List<String> ids2015=new ArrayList<String>();
+	HashMap<String,Float> topTenEcoBowler=new HashMap<String,Float>();
+	HashMap<String,Float> topTenEcoBowler2015=new HashMap<String,Float>();
+	HashMap<String,Integer> bowlerBall=new HashMap<String,Integer>();
+	HashMap<String,Integer> bowlerRun=new HashMap<String,Integer>();
+	List<Float> sortedlist=new ArrayList<Float>();
+	
+//	filtering 2015 ids
+	for(int i=0; i<matchData.size();i++) {
+		
+		String id=matchData.get(i).getId();
+		String year2015=matchData.get(i).getSeason();
+		if(year2015.equals("2015")) {
+			
+			ids2015.add(id);
+		}
+	}
+	
+	for(int i=0; i<deliveryyData.size(); i++) {
+		
+		String deliveryid2015=deliveryyData.get(i).getMatchId();
+		if(ids2015.contains(deliveryid2015)) {
+			
+			String bowler=deliveryyData.get(i).getBowler();
+			int ball=Integer.parseInt(deliveryyData.get(i).getBall());
+			int runs=Integer.parseInt(deliveryyData.get(i).getTotalRuns());
+			if(bowlerBall.containsKey(bowler)){
+				
+				int ballCount=bowlerBall.get(bowler);
+				ballCount+=ball;
+				bowlerBall.put(bowler, ballCount);
+				
+				int runCount=bowlerRun.get(bowler);
+				runCount+=runs;
+				bowlerRun.put(bowler, runCount);
+				
+				
+			}
+			else {
+				
+//				HashMap<Integer,Integer> ballrun=new HashMap<Integer,Integer>();
+//				ballrun.put(ball, runs);
+				
+				bowlerBall.put(bowler,ball);
+				bowlerRun.put(bowler, runs);
+				
+			}
+		}
+		
+		
+	}
+	System.out.println(bowlerRun);
+	System.out.println(bowlerBall);
+	
+	
+	for(String key : bowlerBall.keySet()) {
+		
+		float totalRuns=bowlerRun.get(key);
+		float totalBalls=bowlerBall.get(key);
+		float calculation=totalRuns/totalBalls;
+//		float value=(calculation,"%0.2f");
+		topTenEcoBowler.put(key, calculation);
+		sortedlist.add(calculation);
+	
+	
+	}
+	Collections.sort(sortedlist,Collections.reverseOrder());
+	System.out.println(sortedlist);
+	List<Float> sublist = sortedlist.subList(0, 10);
+	
+	for(int i=0; i<sublist.size();i++) {
+		
+		if(topTenEcoBowler.containsKey(sublist.get(i))) {
+			
+			
+//			topTenEcoBowler2015.put(getKey(topTenEcoBowler, sublist.get(i)),sublist.get(i));
+		}
+	}
+//	System.out.println(topTenEcoBowler2015);
+	return topTenEcoBowler2015;
+}
+
+
 	public static void main(String args[]) {
 		
 	
@@ -240,6 +333,10 @@ static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyDa
 	HashMap<String,Integer> problem3=ExtraRunsPerTeam2016(deliveryyData,matchData); //function call for extra runs played per year
 	problem3.forEach((k,v) -> System.out.println("Key = "
 			+ k + ", Value = " + v));
+	
+	HashMap<String,Float> problem4=TopTenEconomicalBowlers2015(deliveryyData,matchData);
+//	problem4.forEach((k,v) -> System.out.println("Key = "
+//			+ k + ", Value = " + v));
 	}
 }
 	
