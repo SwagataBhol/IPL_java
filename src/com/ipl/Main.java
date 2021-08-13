@@ -231,7 +231,7 @@ static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyDa
 static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
 	
 	List<String> ids2015=new ArrayList<String>();
-	HashMap<String,Float> topTenEcoBowler=new HashMap<String,Float>();
+	HashMap<Float,String> topTenEcoBowler=new HashMap<Float,String>();
 	HashMap<String,Float> topTenEcoBowler2015=new HashMap<String,Float>();
 	HashMap<String,Integer> bowlerBall=new HashMap<String,Integer>();
 	HashMap<String,Integer> bowlerRun=new HashMap<String,Integer>();
@@ -270,20 +270,13 @@ static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> delive
 			}
 			else {
 				
-//				HashMap<Integer,Integer> ballrun=new HashMap<Integer,Integer>();
-//				ballrun.put(ball, runs);
-				
 				bowlerBall.put(bowler,ball);
 				bowlerRun.put(bowler, runs);
 				
 			}
 		}
 		
-		
 	}
-	System.out.println(bowlerRun);
-	System.out.println(bowlerBall);
-	
 	
 	for(String key : bowlerBall.keySet()) {
 		
@@ -291,25 +284,28 @@ static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> delive
 		float totalBalls=bowlerBall.get(key);
 		float calculation=totalRuns/totalBalls;
 //		float value=(calculation,"%0.2f");
-		topTenEcoBowler.put(key, calculation);
+		topTenEcoBowler.put(calculation, key);
 		sortedlist.add(calculation);
 	
 	
 	}
 	Collections.sort(sortedlist,Collections.reverseOrder());
-	System.out.println(sortedlist);
 	List<Float> sublist = sortedlist.subList(0, 10);
+	
+	System.out.println(sublist);
 	
 	for(int i=0; i<sublist.size();i++) {
 		
 		if(topTenEcoBowler.containsKey(sublist.get(i))) {
 			
-			
-//			topTenEcoBowler2015.put(getKey(topTenEcoBowler, sublist.get(i)),sublist.get(i));
+			String BowlerName=topTenEcoBowler.get(sublist.get(i));
+			topTenEcoBowler2015.put(BowlerName, sublist.get(i));
+
 		}
 	}
-//	System.out.println(topTenEcoBowler2015);
+	System.out.println(topTenEcoBowler2015);
 	return topTenEcoBowler2015;
+	
 }
 
 
