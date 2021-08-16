@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import com.ipl.model.*;
-
+import org.json.*;
 
 public class Main {
 	
@@ -55,7 +55,7 @@ public class Main {
 	
 	
 //	read matches data 
-static List<Match> readMatchesData() {
+public static List<Match> readMatchesData() {
 		List<Match> matches = new ArrayList<Match>();
 
 			
@@ -89,7 +89,7 @@ static List<Match> readMatchesData() {
 		return matches;
 	}
 // read deliveries data 
-static List<Deliveries> readDeliveriesData() {
+public static List<Deliveries> readDeliveriesData() {
 	List<Deliveries> deliveries = new ArrayList<Deliveries>();
 
 		
@@ -128,7 +128,7 @@ int ignore=0;
 }
 
 // 1st problem
-static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
+public static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
 	int count=0;
 	HashMap<String, Integer> season = new HashMap<String,Integer>();
 	for(int i=0;i<matchData.size();i++) {
@@ -152,7 +152,7 @@ static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
 }
 
 // 2nd problem
-static HashMap<String,HashMap<String,Integer>> MatchesWonPerTeamPerYear(List<Match> matchData){
+public static HashMap<String,HashMap<String,Integer>> MatchesWonPerTeamPerYear(List<Match> matchData){
 	
 	HashMap<String, HashMap<String, Integer>> matchesWon = new HashMap<String, HashMap<String, Integer>>();
 	
@@ -185,7 +185,7 @@ static HashMap<String,HashMap<String,Integer>> MatchesWonPerTeamPerYear(List<Mat
 }
 
 // 3rd problem
-static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyData,List<Match> matchData){
+public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyData,List<Match> matchData){
 	
 	HashMap<String,Integer> extraRunsPerTeam=new HashMap<String,Integer>();
 	List<String> ids2016=new ArrayList<String>();
@@ -229,7 +229,7 @@ static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deliveryyDa
 }
 
 //4th problem
-static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
+public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
 	
 	List<String> ids2015=new ArrayList<String>();
 	HashMap<Float,String> topTenEcoBowler=new HashMap<Float,String>();
@@ -310,7 +310,7 @@ static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> delive
 	
 }
 
-static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> matchData){
+public static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> matchData){
 	
 	HashMap<String,Integer> wonTossAndMatch=new HashMap<String,Integer>();
 	for(int i=0;i<matchData.size();i++) {
@@ -335,6 +335,14 @@ static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> matchData){
 	return wonTossAndMatch;
 }
 
+// converting into json file
+//public static HashMap<String,Integer> MatchesPLayedPerYearJson(HashMap<String,Integer> problem1){
+//	HashMap<String,Integer> jsonOutput=new HashMap<>();
+//	JSONObject jsonOutput = new JSONObject(problem1);
+//	
+//	
+//	return null;
+//}
 
 	public static void main(String args[]) {
 		
@@ -345,7 +353,13 @@ static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> matchData){
 	List<Deliveries> deliveryyData=readDeliveriesData(); //returning deliveries data
 	
 	
+
 	HashMap<String,Integer> problem1=MatchesPlayedPerYear(matchData); //function call for matches played per year
+//	HashMap<String,Integer> problem1Json=MatchesPLayedPerYearJson(problem1);
+	JSONObject problem1Json = new JSONObject(problem1);
+	
+	
+	System.out.println(problem1Json);
 	problem1.forEach((k,v) -> System.out.println("Key = "
 			+ k + ", Value = " + v));
 	
