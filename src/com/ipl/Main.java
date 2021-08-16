@@ -224,6 +224,7 @@ public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deli
 			}	
 		}	
 	}
+//	System.out.println(extraRunsPerTeam.get("Gujarat Lions"));
 	
 	return extraRunsPerTeam;
 }
@@ -357,6 +358,7 @@ public static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> match
 	HashMap<String,Integer> problem1=MatchesPlayedPerYear(matchData); //function call for matches played per year
 //	HashMap<String,Integer> problem1Json=MatchesPLayedPerYearJson(problem1);
 	JSONObject problem1Json = new JSONObject(problem1);
+	
 	
 	
 	System.out.println(problem1Json);

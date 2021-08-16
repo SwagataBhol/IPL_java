@@ -24,7 +24,7 @@ class matchesWonPerTeamPerYear {
 		dataOf2009=Main.MatchesWonPerTeamPerYear(matches).get("2009");
 
 		
-//		comparing outputs
+//		comparing outputs (5)
 		assertEquals(Main.MatchesWonPerTeamPerYear(matches),matchesWon);
 		
 		assertNotEquals(Main.MatchesWonPerTeamPerYear(matches),wrongData);
@@ -33,13 +33,17 @@ class matchesWonPerTeamPerYear {
 		
 		assertEquals(Main.MatchesWonPerTeamPerYear(matches).get("2009"),dataOf2009);
 		
+//		testing each data
+		for(int i=0;i<matchesWon.size();i++) {
+			
+			HashMap<String,Integer> matchesPlayedPerYearTesting= new HashMap<>();
+			matchesPlayedPerYearTesting=matchesWon.get(i);
+			assertEquals(Main.MatchesWonPerTeamPerYear(matches).get(i),matchesPlayedPerYearTesting);
+			
 		
-		
-		
-		
-		
+		}	
 		
 		
 	}
 
-}
+	}

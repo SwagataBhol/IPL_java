@@ -21,8 +21,19 @@ class topTenEconomicalBowler {
 		topTenEcoBowler=Main.TopTenEconomicalBowlers2015(delivery, matches);
 		int size=topTenEcoBowler.size();
 		
+		HashMap<String,Integer> wrongData=null;
+//		float dataforShivamSharma=0.70;
+		
+		
 		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches).size(),size);
+		
 		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches),topTenEcoBowler);
+		
+		assertNotEquals(Main.TopTenEconomicalBowlers2015(delivery, matches),wrongData);
+		
+//		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches).get("Shivam Sharma"),dataforShivamSharma);
+		
+		
 	}
 
 }
