@@ -240,14 +240,14 @@ public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deli
 }
 
 //4th problem
-public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
+public static HashMap<String,Double> TopTenEconomicalBowlers2015(List<Deliveries> deliveryyData,List<Match> matchData){
 	
 	List<String> ids2015=new ArrayList<String>();
-	HashMap<Float,String> topTenEcoBowler=new HashMap<Float,String>();
-	HashMap<String,Float> topTenEcoBowler2015=new HashMap<String,Float>();
+	HashMap<Double,String> topTenEcoBowler=new HashMap<Double,String>();
+	HashMap<String,Double> topTenEcoBowler2015=new HashMap<String,Double>();
 	HashMap<String,Integer> bowlerBall=new HashMap<String,Integer>();
 	HashMap<String,Integer> bowlerRun=new HashMap<String,Integer>();
-	List<Float> sortedlist=new ArrayList<Float>();
+	List<Double> sortedlist=new ArrayList<Double>();
 	
 //	filtering 2015 ids
 	for(int i=0; i<matchData.size();i++) {
@@ -255,6 +255,7 @@ public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries>
 		String id=matchData.get(i).getId();
 		String year2015=matchData.get(i).getSeason();
 		if(year2015.equals("2015")) {
+			
 			
 			ids2015.add(id);
 		}
@@ -292,17 +293,17 @@ public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries>
 	
 	for(String key : bowlerBall.keySet()) {
 		
-		float totalRuns=bowlerRun.get(key);
-		float totalBalls=bowlerBall.get(key);
-		float calculation=totalRuns/totalBalls;
-//		float value=(calculation,"%0.2f");
+		double totalRuns=bowlerRun.get(key);
+		double totalBalls=bowlerBall.get(key);
+		double calculation=totalRuns/totalBalls;
+		
 		topTenEcoBowler.put(calculation, key);
 		sortedlist.add(calculation);
 	
 	
 	}
 	Collections.sort(sortedlist,Collections.reverseOrder());
-	List<Float> sublist = sortedlist.subList(0, 10);
+	List<Double> sublist = sortedlist.subList(0, 10);
 
 	
 	for(int i=0; i<sublist.size();i++) {
@@ -315,7 +316,7 @@ public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries>
 
 		}
 	}
-//	System.out.println(topTenEcoBowler2015);
+	System.out.println(topTenEcoBowler2015);
 	return topTenEcoBowler2015;
 	
 }
@@ -407,7 +408,7 @@ public static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> match
 	problem3.forEach((k,v) -> System.out.println("Key = "
 			+ k + ", Value = " + v));
 	
-	HashMap<String,Float> problem4=TopTenEconomicalBowlers2015(deliveryyData,matchData);//top 10 economical bowler in 2015
+	HashMap<String,Double> problem4=TopTenEconomicalBowlers2015(deliveryyData,matchData);//top 10 economical bowler in 2015
 	problem4.forEach((k,v) -> System.out.printf("Key = "
 			+ k + ", Value = " +"%.02f", v));
 	
