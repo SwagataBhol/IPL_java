@@ -12,36 +12,46 @@ class matchesWonPerTeamPerYear {
 
 	@Test
 	void test() {
-		HashMap<String,HashMap<String , Integer>> matchesWon=new HashMap<>();
 		
 		List<Match> matches=Main.readMatchesData();
-		matchesWon=Main.MatchesWonPerTeamPerYear(matches);
+
+		HashMap<String,HashMap<String , Integer>> subListResult2017=new HashMap<>();
+		
+		List<Match> sublist=matches.subList(0, 11);
+		
+//		{Gujarat Lions=4, Mumbai Indians=12, Rising Pune Supergiant=10, Sunrisers Hyderabad=8, 
+//		Kings XI Punjab=7, Delhi Daredevils=6, Kolkata Knight Riders=9, Royal Challengers Bangalore=3}
+		
+		HashMap<String,Integer> subHashMap=new HashMap<>();
+		subHashMap.put("Sunrisers Hyderabad", 2);
+		subHashMap.put("Rising Pune Supergiant",1);
+		subHashMap.put("Kolkata Knight Riders",2);
+		subHashMap.put("Kings XI Punjab",2);
+		subHashMap.put("Royal Challengers Bangalore",1);
+		subHashMap.put("Mumbai Indians",2);
+		subHashMap.put("Delhi Daredevils",1);
+		
+		
+		subListResult2017.put("2017", subHashMap);
+	
 		
 		HashMap<String,HashMap<String , Integer>> wrongData = null;
-		int size=matchesWon.size();
 		
-		HashMap<String,Integer> dataOf2009=new HashMap<>();
-		dataOf2009=Main.MatchesWonPerTeamPerYear(matches).get("2009");
-
 		
 //		comparing outputs (5)
-		assertEquals(Main.MatchesWonPerTeamPerYear(matches),matchesWon);
+		assertEquals(Main.MatchesWonPerTeamPerYear(sublist),subListResult2017);
 		
 		assertNotEquals(Main.MatchesWonPerTeamPerYear(matches),wrongData);
 		
-		assertEquals(Main.MatchesWonPerTeamPerYear(matches).size(),size);
+		assertEquals(matches.size(),636);
 		
-		assertEquals(Main.MatchesWonPerTeamPerYear(matches).get("2009"),dataOf2009);
+		assertEquals(Main.MatchesWonPerTeamPerYear(matches).getClass().getSimpleName(),subListResult2017.getClass().getSimpleName());
 		
-//		testing each data
-		for(int i=0;i<matchesWon.size();i++) {
-			
-			HashMap<String,Integer> matchesPlayedPerYearTesting= new HashMap<>();
-			matchesPlayedPerYearTesting=matchesWon.get(i);
-			assertEquals(Main.MatchesWonPerTeamPerYear(matches).get(i),matchesPlayedPerYearTesting);
-			
+		assertThrows(NullPointerException.class,()->Main.MatchesWonPerTeamPerYear(null));
 		
-		}	
+		
+		
+	
 		
 		
 	}

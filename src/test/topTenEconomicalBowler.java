@@ -14,22 +14,29 @@ class topTenEconomicalBowler {
 	@Test
 	void test() {
 		
-		HashMap<String,Float> topTenEcoBowler=new HashMap<>();
+		
 		List<Match> matches=Main.readMatchesData();
 		List<Deliveries> delivery=Main.readDeliveriesData();
 		
-		topTenEcoBowler=Main.TopTenEconomicalBowlers2015(delivery, matches);
-		int size=topTenEcoBowler.size();
+		List<Match> sublistMatch=matches.subList(0, 0);
+		List<Deliveries> sublistDelivery=delivery.subList(0, 0);
+		
+//		HashMap<String,double> sublistResult=new HashMap<>();
+//		Shivam Sharma, Value = 0.70
+//		sublistResult.put("Shivam Sharma",0.70);
+		
 		
 		HashMap<String,Integer> wrongData=null;
 //		float dataforShivamSharma=0.70;
 		
 		
-		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches).size(),size);
+		assertEquals(matches.size(),636);
 		
-		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches),topTenEcoBowler);
+		assertEquals(delivery.size(),150460);
 		
-		assertNotEquals(Main.TopTenEconomicalBowlers2015(delivery, matches),wrongData);
+//		assertNotEquals(Main.TopTenEconomicalBowlers2015(delivery, matches),wrongData);
+		
+//		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches).getClass().getSimpleName(),sublistResult.getClass().getSimpleName());
 		
 //		assertEquals(Main.TopTenEconomicalBowlers2015(delivery, matches).get("Shivam Sharma"),dataforShivamSharma);
 		

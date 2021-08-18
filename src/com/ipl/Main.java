@@ -129,6 +129,10 @@ int ignore=0;
 
 // 1st problem
 public static HashMap<String,Integer> MatchesPlayedPerYear(List<Match> matchData){
+	if(matchData.equals(null)) {
+		return null;
+	}
+	
 	int count=0;
 	HashMap<String, Integer> season = new HashMap<String,Integer>();
 	for(int i=0;i<matchData.size();i++) {
@@ -197,10 +201,14 @@ public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deli
 		String id=matchData.get(i).getId();
 		if(years.equals("2016")) {
 			
+			
 			ids2016.add(id);
 
 		}	
 	}
+
+	
+	
 
 	for(int i=0;i<deliveryyData.size();i++) {
 		
@@ -208,6 +216,8 @@ public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deli
 		
 		
 		if(ids2016.contains(checkid)) {
+			
+//			System.out.println(i);
 			String bowlingTeam=deliveryyData.get(i).getBowlingTeam();
 			String extraRuns=deliveryyData.get(i).getExtraRuns();
 			int extraRunsValue=Integer.parseInt(extraRuns);
@@ -224,7 +234,7 @@ public static HashMap<String,Integer> ExtraRunsPerTeam2016(List<Deliveries> deli
 			}	
 		}	
 	}
-//	System.out.println(extraRunsPerTeam.get("Gujarat Lions"));
+//	System.out.println("index"+index);
 	
 	return extraRunsPerTeam;
 }
@@ -293,8 +303,7 @@ public static HashMap<String,Float> TopTenEconomicalBowlers2015(List<Deliveries>
 	}
 	Collections.sort(sortedlist,Collections.reverseOrder());
 	List<Float> sublist = sortedlist.subList(0, 10);
-	
-	System.out.println(sublist);
+
 	
 	for(int i=0; i<sublist.size();i++) {
 		
@@ -356,18 +365,43 @@ public static HashMap<String,Integer> TossAndMatchesWonPerTeam(List<Match> match
 	
 
 	HashMap<String,Integer> problem1=MatchesPlayedPerYear(matchData); //function call for matches played per year
-//	HashMap<String,Integer> problem1Json=MatchesPLayedPerYearJson(problem1);
+
+// creating json file
 	JSONObject problem1Json = new JSONObject(problem1);
-	
-	
-	
-	System.out.println(problem1Json);
+	JSONArray jsonArray1=new JSONArray();
+	jsonArray1.put(problem1Json);
+	try{
+		
+	FileWriter writeProblem1=new FileWriter("./writeResult/matchesPlayedPerYearJson.json");
+	writeProblem1.write(jsonArray1.toString());
+	writeProblem1.close();
+	}
+	catch(Exception e){
+		
+		e.printStackTrace();
+	}
 	problem1.forEach((k,v) -> System.out.println("Key = "
 			+ k + ", Value = " + v));
+	
 	
 	HashMap<String, HashMap<String, Integer>> problem2 =MatchesWonPerTeamPerYear(matchData); //function call for matches won per team per year
 	problem2.forEach((k,v) -> System.out.println("Key = "
 			+ k + ", Value = " + v));
+	JSONObject problem2Json=new JSONObject();
+	JSONArray jsonArray2=new JSONArray();
+	jsonArray2.put(problem2Json);
+	try {
+		
+		FileWriter writeProblem2=new FileWriter("./writeResult/matchesWonPerTeamPerYearJson.json");
+		writeProblem2.write(jsonArray2.toString());
+		writeProblem2.close();
+	}
+	catch(Exception e) {
+		
+		e.printStackTrace();
+	}
+	
+	
 	
 	HashMap<String,Integer> problem3=ExtraRunsPerTeam2016(deliveryyData,matchData); //function call for extra runs played per year
 	problem3.forEach((k,v) -> System.out.println("Key = "
